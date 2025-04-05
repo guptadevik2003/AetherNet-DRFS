@@ -1,0 +1,20 @@
+{
+  "name": "aethernet-master",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Master node of AetherNet-DRFS: handles uploads, encryption, chunking, distribution, and recovery",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "reed-solomon": "^4.0.0"
+  }
+}

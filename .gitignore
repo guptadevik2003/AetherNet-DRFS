@@ -1,0 +1,15 @@
+# Node modules
+node_modules/
+package-lock.json
+
+# Ignore actual envs but not examples
+.env
+.env.*
+!.env.example
+
+# Master specific
+master/persistent/
+master/temp/
+
+# Peer specific
+peer/storage/
