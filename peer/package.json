@@ -1,0 +1,19 @@
+{
+  "name": "aethernet-peer",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Peer node for AetherNet-DRFS: stores file chunks and responds to chunk fetch requests",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0"
+  }
+}
