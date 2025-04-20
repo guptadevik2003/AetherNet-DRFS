@@ -1,11 +1,17 @@
 import express from 'express';
 import config from './config/appConfig.js';
-import registerPeerRoutes from './routes/peerRoutes.js';
+import peerRoutes from './routes/peerRoutes.js';
+import { loadPeersOnRestart } from './services/peerService.js';
 
+// Express configs
 const app = express();
 app.use(express.json());
 
-registerPeerRoutes(app);
+// API for Peers
+app.use('/api/peers', peerRoutes);
+
+// Initializing Functions
+loadPeersOnRestart();
 
 app.listen(config.node.port, () => {
   console.log(`[${config.node.id}] Running on port ${config.node.port}`);
