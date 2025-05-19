@@ -1,13 +1,13 @@
 import express from "express";
 import config from "./config/appConfig.js";
-import heartbeatRoutes from "./routes/heartbeatRoutes.js";
+// import heartbeatRoutes from "./routes/heartbeatRoutes.js";
 
 // Express configs
 const app = express();
 app.use(express.json());
 
 // API for Master
-app.use("/api/heartbeat", heartbeatRoutes);
+// app.use("/api/heartbeat", heartbeatRoutes);
 
 // Initializing Functions
 
