@@ -10,6 +10,7 @@ package-lock.json
 # Master specific
 master/persistent/
 master/temp/
+master/user-uploads/
 
 # Peer specific
 peer/storage/

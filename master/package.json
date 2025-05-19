@@ -16,6 +16,6 @@
     "chokidar": "^4.0.3",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
-    "reed-solomon": "^4.0.0"
+    "reedsolomon": "^1.0.0"
   }
 }

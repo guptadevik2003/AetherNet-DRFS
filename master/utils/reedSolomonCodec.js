@@ -1,0 +1,46 @@
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const { ReedSolomonEncoder, GenericGF } = require('reedsolomon');
+
+export const generateParityChunks = async (dataChunks, chunkCount, parityCount) => {
+  if(chunkCount+parityCount > 255) {
+    throw new Error(`Total shards (data + parity) cannot exceed 255. Got: ${chunkCount+parityCount}`);
+  }
+
+  const chunkSize = Math.max(...dataChunks.map(c => c.length));
+
+  // Making all data chunks of equal size, (padding if needed)
+  const paddedDataChunks = dataChunks.map(chunk => {
+    if(chunk.length < chunkSize) {
+      const padded = Buffer.alloc(chunkSize);
+      chunk.copy(padded);
+      return padded;
+    }
+    return chunk;
+  });
+
+  // Allocating Empty Buffers for Parity Chunks
+  const parityChunks = Array(parityCount).fill(null).map(() => Buffer.alloc(chunkSize));
+
+  // Initializing RSEncoder
+  const gf256 = new GenericGF(0x011d, 256, 0, true);
+  const RSEncoder = new ReedSolomonEncoder(gf256);
+
+  for(let byteIndex=0; byteIndex<chunkSize; byteIndex++) {
+    const dataColumn = new Uint8Array(chunkCount);
+    for(let i=0; i<chunkCount; i++) {
+      dataColumn[i] = paddedDataChunks[i][byteIndex];
+    }
+
+    const codeword = new Uint8Array(chunkCount + parityCount);
+    codeword.set(dataColumn);
+
+    RSEncoder.encode(codeword, parityCount);
+
+    for(let p=0; p<parityCount; p++) {
+      parityChunks[p][byteIndex] = codeword[chunkCount + p];
+    }
+  }
+
+  return parityChunks;
+};
