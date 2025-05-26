@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { registerPeer } from '../services/peerService.js';
+import { registerPeer, updatePeerHeartbeat } from '../services/peerService.js';
+import config from '../config/appConfig.js';
 
 const router = Router();
 
@@ -7,13 +8,46 @@ const router = Router();
 router.post('/register', async (req, res) => {
   try {
 
-    // Get peer data from req.body
-    // Call registerPeer function and register the peer on this master.
-    // send back master's NODE_ID from master/config/appConfig.js as a json
-    // eg { success: true, message: 'Successfully registered peer', masterId: config.masterId }
+    const peerData = req.body;
+
+    if(!peerData || !peerData.peerId || !peerData.host || !peerData.port) {
+      return res.status(400).json({ success: false, error: 'Missing required peer data.' });
+    }
+
+    const result = await registerPeer(peerData);
+
+    if(!result.success) {
+      return res.status(500).json({ success: false, error: result.error || 'Registration failed.' });
+    }
+
+    return res.json({
+      success: true,
+      message: 'Successfully registered peer.',
+      masterId: config.node.id,
+    });
 
   } catch(err) {
-    return res.status(500).json({ success: false, error: 'Failed to register peer.' });
+    console.log(err);
+    return res.status(500).json({ success: false, error: 'Internal server error.' });
+  }
+});
+
+// POST /api/peers/heartbeat
+router.post('/heartbeat', async (req, res) => {
+  try {
+
+    const { peerId } = req.body;
+    if(!peerId) {
+      return res.status(400).json({ success: false, error: 'Peer ID is required.' });
+    }
+
+    await updatePeerHeartbeat(peerId);
+    
+    return res.json({ success: true, message: 'Heartbeat received.' });
+
+  } catch(err) {
+    console.log(err);
+    return res.status(500).json({ success: false, error: 'Internal server error.' });
   }
 });
 
