@@ -10,8 +10,10 @@ const config = {
   },
   masterApi: process.env.MASTER_API || 'http://localhost:3000',
   paths: {
-    chunksStorage: path.resolve(`${process.env.STORAGE_FOLDER}/chunks` || 'storage/peer-01/chunks'),
+    baseStorage: path.resolve(`${process.env.STORAGE_FOLDER}` || 'storage/peer-01'),
+    dataStorage: path.resolve(`${process.env.STORAGE_FOLDER}/data` || 'storage/peer-01/data'),
     parityStorage: path.resolve(`${process.env.STORAGE_FOLDER}/parity` || 'storage/peer-01/parity'),
+    chunkRecord: path.resolve(`${process.env.STORAGE_FOLDER}/stored-chunks.json` || 'storage/peer-01/stored-chunks.json')
   },
 };
 

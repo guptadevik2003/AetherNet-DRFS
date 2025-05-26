@@ -6,13 +6,24 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "peer-01": "cross-env NODE_ID=peer-01 PORT=4001 STORAGE_FOLDER=storage/peer-01 node index.js",
+    "peer-02": "cross-env NODE_ID=peer-02 PORT=4002 STORAGE_FOLDER=storage/peer-02 node index.js",
+    "peer-03": "cross-env NODE_ID=peer-03 PORT=4003 STORAGE_FOLDER=storage/peer-03 node index.js",
+    "peer-04": "cross-env NODE_ID=peer-04 PORT=4004 STORAGE_FOLDER=storage/peer-04 node index.js"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "*.json"
+    ]
   },
   "license": "ISC",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "nodemon": "^3.1.9"
   },
   "dependencies": {
+    "axios": "^1.9.0",
     "dotenv": "^16.4.7",
     "express": "^5.1.0"
   }
