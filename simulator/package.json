@@ -1,0 +1,11 @@
+{
+  "name": "aethernet-simulator",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Corruption simulator for AetherNet-DRFS: corrupts a file chunk at random",
+  "main": "corruptFile.js",
+  "scripts": {
+    "corrupt": "node corruptFile.js"
+  },
+  "license": "ISC"
+}
