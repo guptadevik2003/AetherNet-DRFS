@@ -15,3 +15,19 @@ export const chunkFile = async (filePath, chunkCount) => {
 
   return chunks;
 };
+
+export const chunkFileBySize = async (filePath, chunkSize, chunkCount) => {
+  const fileBuffer = await fs.readFileSync(filePath);
+  const totalSize = fileBuffer.length;
+  
+  const chunks = [];
+  let offset = 0;
+
+  while(offset < totalSize && chunks.length < chunkCount) {
+    const end = Math.min(offset + chunkSize, totalSize);
+    chunks.push(fileBuffer.slice(offset, end));
+    offset = end;
+  }
+
+  return chunks;
+};
