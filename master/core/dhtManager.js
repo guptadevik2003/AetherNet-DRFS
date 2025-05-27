@@ -37,3 +37,7 @@ export const addMetadataToDHT = async (fileName, chunkMap, chunkSize) => {
 
   await saveDHTToFile();
 };
+
+export const getFileDHTData = async (fileName) => {
+  return DHT.find(f => f.fileName === fileName);
+};

@@ -47,5 +47,10 @@ export const getChunk = async (chunkId) => {
   if(!meta) return null;
   const folder = meta.type==='parity' ? config.paths.parityStorage : config.paths.dataStorage;
   const filePath = path.join(folder, `${meta.id}.enc`);
-  return await fs.readFileSync(filePath);
+  try {
+    return await fs.readFileSync(filePath);
+  } catch(err) {
+    console.log(err.message);
+    return null;
+  }
 };
